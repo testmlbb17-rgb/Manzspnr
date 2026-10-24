@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manz Reseller - SPNR</title>
+<style>
+  :root{
+    --biru:#0a1f44;
+    --biru-cerah:#1e3a8a;
+    --biru-neon:#3b82f6;
+    --merah:#b91c1c;
+    --merah-neon:#ef4444;
+    --gelap:#050b18;
+    --kad:#0d1b33;
+    --teks:#e5edff;
+    --teks-lembut:#93a4c7;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif;}
+
+  body{
+    background:
+      radial-gradient(circle at 15% 10%, rgba(59,130,246,.18), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(239,68,68,.15), transparent 40%),
+      var(--gelap);
+    color:var(--teks);
+    min-height:100vh;
+  }
+
+  /* ===== HEADER ===== */
+  header{
+    position:sticky;top:0;z-index:100;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 28px;
+    background:linear-gradient(90deg, rgba(10,31,68,.95), rgba(5,11,24,.95));
+    border-bottom:1px solid rgba(59,130,246,.35);
+    backdrop-filter:blur(10px);
+    flex-wrap:wrap;gap:12px;
+  }
+
+  .logo{
+    display:flex;align-items:center;gap:12px;
+  }
+
+  .logo .spnr{
+    font-size:1.9rem;font-weight:900;letter-spacing:6px;
+    background:linear-gradient(90deg,var(--biru-neon),#fff 50%,var(--merah-neon));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 24px rgba(59,130,246,.35);
+  }
+
+  .logo small{
+    display:block;font-size:.7rem;letter-spacing:3px;
+    color:var(--teks-lembut);text-transform:uppercase;
+  }
+
+  .brand-title{
+    font-size:1.15rem;font-weight:700;
+    background:linear-gradient(90deg,var(--biru-neon),var(--merah-neon));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+
+  .header-btns{display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{
+    cursor:pointer;border:none;border-radius:10px;
+    padding:10px 18px;font-weight:600;font-size:.9rem;
+    transition:.2s;color:#fff;
+  }
+
+  .btn-biru{
+    background:linear-gradient(135deg,var(--biru-cerah),var(--biru-neon));
+    box-shadow:0 0 18px rgba(59,130,246,.35);
+  }
+  .btn-biru:hover{transform:translateY(-2px);box-shadow:0 0 26px rgba(59,130,246,.6);}
+
+  .btn-merah{
+    background:linear-gradient(135deg,var(--merah),var(--merah-neon));
+    box-shadow:0 0 18px rgba(239,68,68,.35);
+  }
+  .btn-merah:hover{transform:translateY(-2px);box-shadow:0 0 26px rgba(239,68,68,.6);}
+
+  .btn-outline{
+    background:transparent;border:1px solid rgba(147,164,199,.4);color:var(--teks);
+  }
+  .btn-outline:hover{border-color:var(--biru-neon);color:var(--biru-neon);}
+
+  /* ===== HERO ===== */
+  .hero{
+    text-align:center;padding:60px 20px 40px;
+  }
+  .hero h1{
+    font-size:clamp(1.8rem,4vw,3rem);font-weight:900;
+    background:linear-gradient(90deg,var(--biru-neon),#fff,var(--merah-neon));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{color:var(--teks-lembut);margin-top:10px;font-size:1rem;}
+
+  .badge-admin{
+    display:none;margin:14px auto 0;width:fit-content;
+    padding:6px 16px;border-radius:999px;font-size:.78rem;font-weight:700;
+    background:rgba(239,68,68,.15);color:#fca5a5;
+    border:1px solid rgba(239,68,68,.5);letter-spacing:1px;
+  }
+  .badge-admin.aktif{display:block;}
+
+  /* ===== GRID PRODUK ===== */
+  .grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+    gap:22px;padding:20px 28px 60px;max-width:1250px;margin:0 auto;
+  }
+
+  .kad{
+    background:linear-gradient(160deg,var(--kad),#081226);
+    border:1px solid rgba(59,130,246,.25);
+    border-radius:16px;overflow:hidden;
+    display:flex;flex-direction:column;
+    transition:.25s;
+  }
+  .kad:hover{
+    transform:translateY(-5px);
+    border-color:rgba(239,68,68,.5);
+    box-shadow:0 14px 40px rgba(0,0,0,.6),0 0 20px rgba(59,130,246,.2);
+  }
+
+  /* Galeri gambar dalam kad */
+  .galeri{
+    display:grid;gap:3px;background:#000;
+    grid-template-columns:1fr;
+  }
+  .galeri.n2{grid-template-columns:1fr 1fr;}
+  .galeri.n3{grid-template-columns:1fr 1fr;}
+  .galeri.n3 .g1{grid-column:1 / -1;}
+  .galeri.n4{grid-template-columns:1fr 1fr;}
+
+  .galeri img{
+    width:100%;height:140px;object-fit:cover;display:block;
+  }
+  .galeri.n1 img{height:190px;}
+  .galeri.n3 .g1 img{height:150px;}
+  .galeri .g2 img,.galeri .g3 img,.galeri .g4 img{height:110px;}
+  .galeri.n2 img{height:140px;}
+
+  .kad-body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1;}
+
+  .kad-body h3{font-size:1.05rem;color:#fff;}
+  .kad-body .harga{
+    font-size:1.25rem;font-weight:800;
+    background:linear-gradient(90deg,var(--biru-neon),var(--merah-neon));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .kad-body .desc{font-size:.82rem;color:var(--teks-lembut);line-height:1.5;flex:1;white-space:pre-wrap;}
+
+  .kad-body .aksi{display:flex;gap:8px;margin-top:6px;}
+  .kad-body .aksi button{flex:1;padding:8px;font-size:.8rem;}
+
+  .kosong{
+    grid-column:1/-1;text-align:center;padding:60px 20px;
+    color:var(--teks-lembut);border:1px dashed rgba(147,164,199,.25);
+    border-radius:16px;
+  }
+
+  /* ===== MODAL ===== */
+  .overlay{
+    position:fixed;inset:0;background:rgba(2,6,16,.85);
+    backdrop-filter:blur(6px);
+    display:none;align-items:center;justify-content:center;
+    padding:20px;z-index:200;
+  }
+  .overlay.aktif{display:flex;}
+
+  .modal{
+    background:linear-gradient(160deg,#0d1b33,#060d1c);
+    border:1px solid rgba(59,130,246,.35);
+    border-radius:18px;padding:26px;width:100%;max-width:520px;
+    max-height:90vh;overflow-y:auto;
+    box-shadow:0 20px 60px rgba(0,0,0,.8),0 0 40px rgba(59,130,246,.15);
+  }
+  .modal h2{
+    font-size:1.25rem;margin-bottom:18px;
+    background:linear-gradient(90deg,var(--biru-neon),var(--merah-neon));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:.82rem;color:var(--teks-lembut);margin-bottom:6px;font-weight:600;}
+  .field input,.field textarea{
+    width:100%;padding:11px 14px;border-radius:10px;
+    background:#060d1c;border:1px solid rgba(147,164,199,.25);
+    color:var(--teks);font-size:.9rem;outline:none;transition:.2s;
+    font-family:inherit;
+  }
+  .field input:focus,.field textarea:focus{
+    border-color:var(--biru-neon);box-shadow:0 0 0 3px rgba(59,130,246,.15);
+  }
+  .field textarea{resize:vertical;min-height:70px;}
+
+  .upload-area{
+    border:2px dashed rgba(59,130,246,.4);border-radius:12px;
+    padding:16px;text-align:center;cursor:pointer;
+    color:var(--teks-lembut);font-size:.85rem;transition:.2s;
+    background:rgba(59,130,246,.04);
+  }
+  .upload-area:hover{border-color:var(--merah-neon);background:rgba(239,68,68,.05);}
+
+  .preview{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px;
+  }
+  .preview .pitem{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;border:1px solid rgba(147,164,199,.3);}
+  .preview .pitem img{width:100%;height:100%;object-fit:cover;}
+  .preview .pitem .hapus{
+    position:absolute;top:3px;right:3px;width:20px;height:20px;
+    border-radius:50%;background:var(--merah-neon);color:#fff;
+    font-size:.65rem;display:flex;align-items:center;justify-content:center;
+    padding:0;line-height:1;
+  }
+
+  .modal-aksi{display:flex;gap:10px;margin-top:20px;}
+  .modal-aksi button{flex:1;}
+
+  .ralat{color:var(--merah-neon);font-size:.8rem;margin-top:8px;display:none;}
+  .ralat.aktif{display:block;}
+
+  .info-pin{font-size:.75rem;color:var(--teks-lembut);margin-top:10px;text-align:center;}
+
+  /* Footer */
+  footer{
+    text-align:center;padding:24px;color:var(--teks-lembut);
+    font-size:.8rem;border-top:1px solid rgba(59,130,246,.15);
+  }
+  footer .spnr-kecil{
+    font-weight:900;letter-spacing:4px;
+    background:linear-gradient(90deg,var(--biru-neon),var(--merah-neon));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+
+  @media(max-width:600px){
+    header{padding:12px 16px;}
+    .grid{padding:16px;grid-template-columns:1fr;}
+    .logo .spnr{font-size:1.5rem;letter-spacing:4px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div>
+      <div class="spnr">SPNR</div>
+      <small>Manz Reseller</small>
+    </div>
+  </div>
+  <div class="header-btns">
+    <button class="btn-biru" id="btnTambah" style="display:none">+ Tambah Akaun</button>
+    <button class="btn-merah" id="btnAdmin">Admin</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Manz Reseller</h1>
+  <p>Jual beli pelbagai akaun — pantau, muat naik & urus akaun anda.</p>
+  <div class="badge-admin" id="badgeAdmin">★ MOD ADMIN AKTIF ★</div>
+</section>
+
+<main class="grid" id="gridProduk"></main>
+
+<!-- MODAL LOGIN ADMIN -->
+<div class="overlay" id="overlayLogin">
+  <div class="modal">
+    <h2>🔐 Log Masuk Admin</h2>
+    <div class="field">
+      <label>Masukkan PIN Admin</label>
+      <input type="password" id="inputPin" placeholder="•••••" maxlength="8" inputmode="numeric">
+      <div class="ralat" id="ralatPin">PIN salah. Cuba lagi.</div>
+    </div>
+    <div class="modal-aksi">
+      <button class="btn-outline" onclick="tutupSemua()">Batal</button>
+      <button class="btn-merah" id="btnSahkanPin">Sahkan</button>
+    </div>
+    <div class="info-pin">Hanya admin sahaja boleh menambah akaun.</div>
+  </div>
+</div>
+
+<!-- MODAL TAMBAH / EDIT AKAUN -->
+<div class="overlay" id="overlayTambah">
+  <div class="modal">
+    <h2 id="tajukModal">➕ Tambah Akaun Baru</h2>
+
+    <div class="field">
+      <label>Nama Akaun / Tajuk</label>
+      <input type="text" id="inputNama" placeholder="Contoh: MLBB Mythic 100 Skin">
+    </div>
+
+    <div class="field">
+      <label>Harga (RM)</label>
+      <input type="number" id="inputHarga" placeholder="Contoh: 250">
+    </div>
+
+    <div class="field">
+      <label>Maklumat / Deskripsi</label>
+      <textarea id="inputDesc" placeholder="Detail akaun, rank, skin, dll..."></textarea>
+    </div>
+
+    <div class="field">
+      <label>Gambar Akaun (1 hingga 4 gambar)</label>
+      <div class="upload-area" id="uploadArea">
+        📷 Klik untuk pilih gambar (maks 4)
+      </div>
+      <input type="file" id="inputGambar" accept="image/*" multiple style="display:none">
+      <div class="preview" id="previewGambar"></div>
+      <div class="ralat" id="ralatGambar">Maksimum 4 gambar sahaja.</div>
+    </div>
+
+    <div class="modal-aksi">
+      <button class="btn-outline" onclick="tutupSemua()">Batal</button>
+      <button class="btn-biru" id="btnSimpan">Simpan Akaun</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL LIHAT AKAUN -->
+<div class="overlay" id="overlayLihat">
+  <div class="modal">
+    <h2 id="lihatNama"></h2>
+    <div class="preview" id="lihatGambar" style="grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;"></div>
+    <div class="field">
+      <label>Harga</label>
+      <div id="lihatHarga" style="font-size:1.4rem;font-weight:800;background:linear-gradient(90deg,var(--biru-neon),var(--merah-neon));-webkit-background-clip:text;background-clip:text;color:transparent;"></div>
+    </div>
+    <div class="field">
+      <label>Maklumat</label>
+      <div id="lihatDesc" style="font-size:.9rem;color:var(--teks-lembut);line-height:1.6;white-space:pre-wrap;"></div>
+    </div>
+    <div class="modal-aksi">
+      <button class="btn-merah" onclick="tutupSemua()">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2026 <span class="spnr-kecil">SPNR</span> — Manz Reseller. Semua hak terpelihara.
+</footer>
+
+<script>
+/* =========================================================
+   DATA & STATE
+   ========================================================= */
+const PIN_ADMIN = "25612";
+let isAdmin = false;
+
+// Data disimpan dalam localStorage supaya kekal
+let akaunList = JSON.parse(localStorage.getItem("manz_akaun")) || [
+  {
+    id: 1,
+    nama: "Contoh: MLBB Mythic Glory",
+    harga: 350,
+    desc: "Rank Mythic Glory, 120 skin, emulator ready.\nSiap dengan email & password.",
+    gambar: [] // placeholder — tiada gambar contoh sebab upload base64
+  }
+];
+
+let gambarSemasa = []; // array base64 untuk borang
+let editId = null;     // null = tambah baru, ada id = edit
+
+function simpanData(){
+  try{
+    localStorage.setItem("manz_akaun", JSON.stringify(akaunList));
+  }catch(e){
+    alert("Ruang storan penuh. Sila padam beberapa gambar/akaun lama.");
+  }
+}
+
+/* =========================================================
+   RENDER KAD
+   ========================================================= */
+function render(){
+  const grid = document.getElementById("gridProduk");
+  grid.innerHTML = "";
+
+  if(akaunList.length === 0){
+    grid.innerHTML = `<div class="kosong">Belum ada akaun dijual.<br><br>Admin boleh tambah akaun menggunakan butang di atas.</div>`;
+    return;
+  }
+
+  akaunList.forEach(a => {
+    const kad = document.createElement("div");
+    kad.className = "kad";
+
+    // Galeri
+    let galeriHTML = "";
+    if(a.gambar && a.gambar.length > 0){
+      const n = a.gambar.length;
+      galeriHTML = `<div class="galeri n${n}">`;
+      a.gambar.forEach((src, i) => {
+        galeriHTML += `<div class="g${i+1}"><img src="${src}" alt="${a.nama}"></div>`;
+      });
+      galeriHTML += `</div>`;
+    } else {
+      galeriHTML = `<div class="galeri n1"><div style="height:160px;display:flex;align-items:center;justify-content:center;background:#081226;color:#4a5c80;font-size:.8rem;">Tiada Gambar</div></div>`;
+    }
+
+    kad.innerHTML = `
+      ${galeriHTML}
+      <div class="kad-body">
+        <h3>${escapeHTML(a.nama)}</h3>
+        <div class="harga">RM ${Number(a.harga).toFixed(2)}</div>
+        <div class="desc">${escapeHTML(a.desc)}</div>
+        <div class="aksi">
+          <button class="btn-biru" onclick="lihatAkaun(${a.id})">Lihat</button>
+          ${isAdmin ? `<button class="btn-merah" onclick="padamAkaun(${a.id})">Padam</button>` : ``}
+        </div>
+      </div>
+    `;
+    grid.appendChild(kad);
+  });
+}
+
+function escapeHTML(str){
+  return String(str).replace(/[&<>"']/g, m => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[m]));
+}
+
+/* =========================================================
+   ADMIN LOGIN
+   ========================================================= */
+const btnAdmin = document.getElementById("btnAdmin");
+const overlayLogin = document.getElementById("overlayLogin");
+const inputPin = document.getElementById("inputPin");
+const ralatPin = document.getElementById("ralatPin");
+
+btnAdmin.addEventListener("click", () => {
+  if(isAdmin){
+    // Log keluar
+    isAdmin = false;
+    document.getElementById("btnTambah").style.display = "none";
+    document.getElementById("badgeAdmin").classList.remove("aktif");
+    btnAdmin.textContent = "Admin";
+    render();
+  } else {
+    inputPin.value = "";
+    ralatPin.classList.remove("aktif");
+    overlayLogin.classList.add("aktif");
+    setTimeout(()=>inputPin.focus(), 100);
+  }
+});
+
+document.getElementById("btnSahkanPin").addEventListener("click", sahkanPin);
+inputPin.addEventListener("keydown", e => { if(e.key === "Enter") sahkanPin(); });
+
+function sahkanPin(){
+  if(inputPin.value === PIN_ADMIN){
+    isAdmin = true;
+    overlayLogin.classList.remove("aktif");
+    document.getElementById("btnTambah").style.display = "inline-block";
+    document.getElementById("badgeAdmin").classList.add("aktif");
+    btnAdmin.textContent = "Log Keluar";
+    render();
+  } else {
+    ralatPin.classList.add("aktif");
+    inputPin.value = "";
+    inputPin.focus();
+  }
+}
+
+/* =========================================================
+   MODAL TAMBAH / EDIT
+   ========================================================= */
+const overlayTambah = document.getElementById("overlayTambah");
+const inputGambar = document.getElementById("inputGambar");
+const previewGambar = document.getElementById("previewGambar");
+const ralatGambar = document.getElementById("ralatGambar");
+
+document.getElementById("btnTambah").addEventListener("click", () => {
+  if(!isAdmin) return;
+  editId = null;
+  document.getElementById("tajukModal").textContent = "➕ Tambah Akaun Baru";
+  document.getElementById("inputNama").value = "";
+  document.getElementById("inputHarga").value = "";
+  document.getElementById("inputDesc").value = "";
+  gambarSemasa = [];
+  renderPreview();
+  overlayTambah.classList.add("aktif");
+});
+
+document.getElementById("uploadArea").addEventListener("click", () => inputGambar.click());
+
+inputGambar.addEventListener("change", e => {
+  const files = Array.from(e.target.files);
+  ralatGambar.classList.remove("aktif");
+
+  for(const f of files){
+    if(gambarSemasa.length >= 4){
+      ralatGambar.classList.add("aktif");
+      break;
+    }
+    if(!f.type.startsWith("image/")) continue;
+
+    const reader = new FileReader();
+    reader.onload = ev => {
+      gambarSemasa.push(ev.target.result);
+      renderPreview();
+    };
+    reader.readAsDataURL(f);
+  }
+  inputGambar.value = ""; // reset supaya boleh pilih fail sama
+});
+
+function renderPreview(){
+  previewGambar.innerHTML = "";
+  gambarSemasa.forEach((src, i) => {
+    const div = document.createElement("div");
+    div.className = "pitem";
+    div.innerHTML = `<img src="${src}" alt="preview"><button class="hapus" onclick="hapusGambar(${i})">✕</button>`;
+    previewGambar.appendChild(div);
+  });
+}
+
+function hapusGambar(i){
+  gambarSemasa.splice(i,1);
+  renderPreview();
+}
+
+/* Simpan akaun */
+document.getElementById("btnSimpan").addEventListener("click", () => {
+  const nama = document.getElementById("inputNama").value.trim();
+  const harga = document.getElementById("inputHarga").value;
+  const desc = document.getElementById("inputDesc").value.trim();
+
+  if(!nama || harga === ""){
+    alert("Sila isi nama akaun dan harga.");
+    return;
+  }
+
+  if(editId === null){
+    // Tambah baru
+    const baru = {
+      id: Date.now(),
+      nama,
+      harga: parseFloat(harga),
+      desc,
+      gambar: [...gambarSemasa]
+    };
+    akaunList.unshift(baru);
+  } else {
+    // Edit
+    const idx = akaunList.findIndex(a => a.id === editId);
+    if(idx > -1){
+      akaunList[idx].nama = nama;
+      akaunList[idx].harga = parseFloat(harga);
+      akaunList[idx].desc = desc;
+      akaunList[idx].gambar = [...gambarSemasa];
+    }
+  }
+
+  simpanData();
+  render();
+  tutupSemua();
+});
+
+/* =========================================================
+   LIHAT & PADAM
+   ========================================================= */
+function lihatAkaun(id){
+  const a = akaunList.find(x => x.id === id);
+  if(!a) return;
+
+  document.getElementById("lihatNama").textContent = a.nama;
+  document.getElementById("lihatHarga").textContent = "RM " + Number(a.harga).toFixed(2);
+  document.getElementById("lihatDesc").textContent = a.desc || "Tiada maklumat tambahan.";
+
+  const lg = document.getElementById("lihatGambar");
+  lg.innerHTML = "";
+  if(a.gambar && a.gambar.length){
+    a.gambar.forEach(src => {
+      const d = document.createElement("div");
+      d.className = "pitem";
+      d.style.aspectRatio = "1";
+      d.innerHTML = `<img src="${src}" alt="${a.nama}">`;
+      lg.appendChild(d);
+    });
+    lg.style.display = "grid";
+  } else {
+    lg.style.display = "none";
+  }
+
+  document.getElementById("overlayLihat").classList.add("aktif");
+}
+
+function padamAkaun(id){
+  if(!isAdmin) return;
+  if(!confirm("Padam akaun ini?")) return;
+  akaunList = akaunList.filter(a => a.id !== id);
+  simpanData();
+  render();
+}
+
+/* =========================================================
+   TUTUP MODAL
+   ========================================================= */
+function tutupSemua(){
+  document.querySelectorAll(".overlay").forEach(o => o.classList.remove("aktif"));
+}
+
+// Klik luar modal untuk tutup
+document.querySelectorAll(".overlay").forEach(o => {
+  o.addEventListener("click", e => {
+    if(e.target === o) tutupSemua();
+  });
+});
+
+// ESC untuk tutup
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape") tutupSemua();
+});
+
+/* =========================================================
+   INIT
+   ========================================================= */
+render();
+</script>
+</body>
+</html>
